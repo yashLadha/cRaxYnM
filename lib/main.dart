@@ -30,6 +30,8 @@ class _MainState extends State<Main> {
   String queryText = "";
   String inputText = "";
 
+  final inputTextController = TextEditingController();
+
   @override
   void initState() {
     setState(() {
@@ -42,12 +44,6 @@ class _MainState extends State<Main> {
   void didUpdateWidget(Main old) {
     super.didUpdateWidget(old);
     print('Widget updated: Main Widget');
-  }
-
-  void _updateInputValue(String text) {
-    setState(() {
-      inputText = text;
-    });
   }
 
   @override
@@ -76,7 +72,7 @@ class _MainState extends State<Main> {
                   labelText: 'Enter Text',
                   border: OutlineInputBorder(),
                 ),
-                onChanged: _updateInputValue,
+                controller: inputTextController,
               ),
             ),
             // Submission button Widget
@@ -90,7 +86,7 @@ class _MainState extends State<Main> {
                 ),
                 onPressed: () {
                   setState(() {
-                    queryText = inputText;
+                    queryText = inputTextController.text;
                   });
                 },
               ),

@@ -2,7 +2,7 @@
     <img src='images/logo.png' width='512' height='512'>
 </p>
 <p align="center">
-    <img src="https://flutter.io/images/flutter-mark-square-100.png" alt="Flutter" width="40" height="40" /> 
+    <img src="https://flutter.io/images/flutter-mark-square-100.png" alt="Flutter" width="40" height="40" />
     <img src="https://travis-ci.com/yashLadha/cRaxYnM.svg?branch=master" />
 </p>
 
@@ -32,7 +32,7 @@ It uses nothing fancy just some random selection from a predefined matrix inside
 Enjoy the craxyness!!.
 
 ## Bugs:
-* Re-rendering of child widgets on text input change.
+* ~~Re-rendering of child widgets on text input change.~~
 
 ## Screenshots
 
