@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:craxynm/result.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,18 +14,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
-      home: Main(title: 'Cr@xYnM'),
+      home: const Main(title: 'Cr@xYnM'),
     );
   }
 }
 
 class Main extends StatefulWidget {
-  // Main Stateful Widget of the application
-  Main({Key key, this.title}) : super(key: key);
   final String title;
 
+  const Main({Key? key, required this.title}) : super(key: key);
+
   @override
-  _MainState createState() => _MainState();
+  State<Main> createState() => _MainState();
 }
 
 class _MainState extends State<Main> {
@@ -66,9 +68,9 @@ class _MainState extends State<Main> {
           children: <Widget>[
             // Input Text Widget
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter Text',
                   border: OutlineInputBorder(),
                 ),
@@ -77,31 +79,25 @@ class _MainState extends State<Main> {
             ),
             // Submission button Widget
             Center(
-              child: RaisedButton(
-                color: Colors.lightBlue[500],
-                padding: EdgeInsets.all(15.0),
-                child: Text('Get your Cr@xy'),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+              child: ElevatedButton(
                 onPressed: () {
                   setState(() {
                     queryText = inputTextController.text;
                   });
                 },
+                child: const Text('Get your Cr@xy'),
               ),
             ),
             // Widget for some gap
-            SizedBox(height: 20.0,),
+            const SizedBox(height: 20.0,),
             // Result Widget to display list of the Craxy texts
             Result(string: queryText),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(16.0),
             )
           ],
         ),
       ),
-      resizeToAvoidBottomPadding: false,
     );
   }
 }

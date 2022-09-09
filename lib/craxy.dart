@@ -32,15 +32,15 @@ class Craxy {
   };
 
   List<String> generateCraxyNames(String str) {
-    List<String> results = new List();
+    List<String> results = <String>[];
     var rng = Random(); // Random number generator for generating indexes
     for (int trials = 0; trials < 10; ++trials) {
       String text = "";
       for (int idx = 0; idx < str.length; ++idx) {
         if (isCharacter(str[idx])) {
-          String _char = str[idx].toLowerCase();
-          int _randNo = rng.nextInt(symbols[_char].length);
-          text += symbols[_char][_randNo];
+          String char = str[idx].toLowerCase();
+          int randNo = rng.nextInt(symbols[char]!.length);
+          text += symbols[char]![randNo];
         } else {
           text += str[idx];
         }
