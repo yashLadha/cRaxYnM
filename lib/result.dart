@@ -2,36 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:craxynm/craxy.dart';
 import 'package:flutter/services.dart';
 
-class Result extends StatefulWidget {
+class Result extends StatelessWidget {
   final String string;
-  const Result({Key? key, required this.string})
-      : super(key: key);
+  const Result({Key? key, required this.string}) : super(key: key);
 
-  @override
-  State<Result> createState() => _ResultState();
-}
-
-class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
-    // Returns an empty text on an empty string
-    if (widget.string == "") {
+    if (string == "") {
       return const Text('');
     }
-    // Fetched the name list for the application
-    List<String> strings = Craxy().generateCraxyNames(widget.string);
+
+    return FutureBuilder(
+      future: Craxy().generateCraxyNames(string),
+      builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+        if (snapshot.hasData) {
+          return generateTextList(context, snapshot.data!);
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  Widget generateTextList(BuildContext context, List<String> strings) {
     return Flexible(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         itemCount: strings.length,
         itemBuilder: (BuildContext ctxt, int idx) {
           return GestureDetector(
             child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               elevation: 1.0,
-              margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 6.0,
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
@@ -49,9 +58,9 @@ class _ResultState extends State<Result> {
               // Snackbar for updating user on clipboard data updation
               final snackBar = SnackBar(
                 content: Text('${strings[idx]} copied to clipboard.'),
-                duration: const Duration(milliseconds: 500) ,
+                duration: const Duration(milliseconds: 500),
               );
-              Scaffold.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           );
         },

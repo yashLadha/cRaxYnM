@@ -45,7 +45,6 @@ class _MainState extends State<Main> {
   @override
   void didUpdateWidget(Main old) {
     super.didUpdateWidget(old);
-    print('Widget updated: Main Widget');
   }
 
   @override
@@ -58,44 +57,48 @@ class _MainState extends State<Main> {
           widget.title,
           style: TextStyle(
             color: Colors.lightBlueAccent[400],
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Input Text Widget
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Enter Text',
-                  border: OutlineInputBorder(),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        queryText = value;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Enter Text',
+                      border: OutlineInputBorder(),
+                    ),
+                    controller: inputTextController,
+                  ),
                 ),
-                controller: inputTextController,
-              ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        queryText = inputTextController.text;
+                      });
+                    },
+                    child: const Text('Get your Cr@xy'),
+                  ),
+                ),
+                Result(string: queryText),
+              ],
             ),
-            // Submission button Widget
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    queryText = inputTextController.text;
-                  });
-                },
-                child: const Text('Get your Cr@xy'),
-              ),
-            ),
-            // Widget for some gap
-            const SizedBox(height: 20.0,),
-            // Result Widget to display list of the Craxy texts
-            Result(string: queryText),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-            )
-          ],
+          ),
         ),
       ),
     );
