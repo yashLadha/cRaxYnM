@@ -18,13 +18,13 @@ class Result extends StatelessWidget {
         if (snapshot.hasData) {
           return generateTextList(context, snapshot.data!);
         }
-        return const Center(child: CircularProgressIndicator());
+        return const Expanded(child: Center(child: CircularProgressIndicator()));
       },
     );
   }
 
   Widget generateTextList(BuildContext context, List<String> strings) {
-    return Flexible(
+    return Expanded(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
