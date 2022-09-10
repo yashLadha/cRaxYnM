@@ -1,5 +1,5 @@
 <p align="center">
-    <img src='../images/logo.png' width='512' height='512'>
+    <img src='../assets/craxy.png' width='512' height='512'>
 </p>
 <p align="center">
     <img src="https://travis-ci.com/yashLadha/cRaxYnM.svg?branch=master" />
