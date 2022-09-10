@@ -1,11 +1,30 @@
+import 'package:craxynm/utils/themeUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:craxynm/result.dart';
 import 'package:rive/rive.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+      const MediaQuery(
+        data: MediaQueryData(),
+        child: MyApp(),
+      ),
+    );
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool? isLightTheme;
+
+  void updateAppTheme(bool isLightModeEnabled) {
+    setState(() {
+      isLightTheme = isLightModeEnabled;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +33,29 @@ class MyApp extends StatelessWidget {
       title: 'Cr@xYnM',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const Main(title: 'Cr@xYnM'),
+      themeMode: isLightTheme != null
+          ? ThemeUtil.getSystemTheme(isLightTheme!)
+          : ThemeMode.system,
+      home: Main(
+        title: 'Cr@xYnM',
+        updateAppTheme: updateAppTheme,
+        isLightMode: isLightTheme ?? ThemeUtil.isLightModeEnabled(context),
+      ),
     );
   }
 }
 
 class Main extends StatefulWidget {
   final String title;
+  final Function updateAppTheme;
+  final bool isLightMode;
 
-  const Main({Key? key, required this.title}) : super(key: key);
+  const Main(
+      {Key? key,
+      required this.title,
+      required this.updateAppTheme,
+      required this.isLightMode})
+      : super(key: key);
 
   @override
   State<Main> createState() => _MainState();
@@ -31,7 +64,6 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> with WidgetsBindingObserver {
   String queryText = "";
   String inputText = "";
-  bool isLightMode = true;
   SMITrigger? _toggleSwitch;
   SMIBool? _setLightTheme;
 
@@ -55,13 +87,8 @@ class _MainState extends State<Main> with WidgetsBindingObserver {
     super.didChangePlatformBrightness();
   }
 
-  bool isLightModeEnabled() {
-    return MediaQuery.of(context).platformBrightness == Brightness.light;
-  }
-
   void decideThemeSwitch() {
-    isLightMode = isLightModeEnabled();
-    _setLightTheme?.change(isLightMode);
+    _setLightTheme?.change(widget.isLightMode);
     _toggleSwitch?.fire();
   }
 
@@ -97,6 +124,7 @@ class _MainState extends State<Main> with WidgetsBindingObserver {
               child: GestureDetector(
                 onTap: () {
                   _toggleSwitch?.fire();
+                  widget.updateAppTheme(!widget.isLightMode);
                 },
                 child: RiveAnimation.asset(
                   "assets/rive/switch_day_night.riv",
