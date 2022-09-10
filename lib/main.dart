@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:craxynm/result.dart';
 import 'package:rive/rive.dart';
 
-void main() => runApp(
-      const MediaQuery(
-        data: MediaQueryData(),
-        child: MyApp(),
-      ),
-    );
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -30,16 +25,16 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Cr@xYnM',
+      title: 'Cr@xY',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: isLightTheme != null
           ? ThemeUtil.getSystemTheme(isLightTheme!)
           : ThemeMode.system,
       home: Main(
-        title: 'Cr@xYnM',
+        title: 'Cr@xY',
         updateAppTheme: updateAppTheme,
-        isLightMode: isLightTheme ?? ThemeUtil.isLightModeEnabled(context),
+        isLightMode: isLightTheme ?? ThemeUtil.isLightModeEnabled(),
       ),
     );
   }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class ThemeUtil {
-  static isLightModeEnabled(BuildContext context) {
-    return MediaQuery.platformBrightnessOf(context) == Brightness.light;
+  static isLightModeEnabled() {
+    return SchedulerBinding.instance.window.platformBrightness == Brightness.light;
   }
 
   static getSystemTheme(bool isLightThemeEnabled) {
